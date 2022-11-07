@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Check-in service</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="crossorigin" />
+    <link rel="shortcut icon" type="image/png" href="https://doo.net/checkin/static/icons/favicon-32.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="https://doo.net/checkin/static/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="60x60" href="https://doo.net/checkin/static/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="https://doo.net/checkin/static/icons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://doo.net/checkin/static/icons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://doo.net/checkin/static/icons/apple-touch-icon-152x152.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
+    <link rel="stylesheet" href="index.css" />
+</head>
+<script>
+    // Check that service workers are supported
+    if ("serviceWorker" in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("./sw.js");
+        });
+    }
+</script>
+
+<body>
+    <section class="check-in">
+        <header class="check-in__header">
+            <div class="container">
+                <div class="row">
+                    <div class="check-in__status">
+                        <div class="check-in-action">
+                            <div class="check-in__input">
+                                <form>
+                                    <input id="ticket-hash__input" placeholder="Ticket-Hash"
+                                        style="height: 36px;width:250px" type="text"
+                                        onkeyup="getTicketInfo(this.value)">
+                                </form>
+                                <div class="qr-code-toggle">
+                                    <div class="button r" id="button-1">
+                                        <input id="qr-checkbox" type="checkbox" class="checkbox"
+                                            onclick="openQrScanner()" />
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="check-in__logo">
+                        <img style="width: 40%;" id="checkmark"
+                            src="https://doo-product-consulting-uploads.s3.eu-central-1.amazonaws.com/Scandoo/logo-blue-transparent.png">
+                    </div>
+                    <div class="check-in__attendee">
+                        <h2 id="name" class="attendee__name"></h2>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="row">
+            <div class="col">
+                <div style="width:100%;" id="reader"></div>
+            </div>
+        </div>
+        <section class="check-in__content">
+            <div class="container">
+                <div class="row">
+                    <div class="check-in__booking-summary">
+                        <h3 class="check-in__ticket">
+                            <div class="check-in__ticket-icon"><i class="icon icon--lg icon--tickets"></i>
+                                <div class="check-in__ticket-icon-background"></div>
+                            </div><span id="ticketCategory"></span>
+                        </h3>
+                    </div>
+                    <div class="check-in__sections-separator">
+                        <div class="check-in__sections-separator-line"></div>
+                    </div>
+                    <div class="check-in__booking-info">
+                        <div class="row">
+                            <div class="check-in__booking-event">
+                                <p class="text text--sm text--secondary mb-xxs">
+                                    <span>Veranstaltung</span><span class="d-inline-block d-lg-none">:</span>
+                                </p>
+                                <p id="event" class="text text--md text--primary ml-2 ml-lg-0"></p>
+                            </div>
+                            <div class="check-in__booking-id">
+                                <p class="text text--sm text--secondary mb-xxs">
+                                    <span>Buchungsnummer</span><span class="d-inline-block d-lg-none">:</span>
+                                </p>
+                                <p id="booking-id" class="text text--md text--primary ml-2 ml-lg-0"></p>
+                            </div>
+                            <div class="check-in__booker-name">
+                                <p class="text text--sm text--secondary mb-xxs">
+                                    <span>Vergangene Eintritte</span><span class="d-inline-block d-lg-none">:</span>
+                                </p>
+                                <p id="entries" class="text text--md text--primary ml-2 ml-lg-0"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="check-in-action ">
+                        <div class="check-in-action__center">
+                            <button class="check-in-action__button" id="checkinBtn" onclick="checkInTicket()"
+                                disabled>EINCHECKEN</button>
+                        </div>
+                        <div class="check-in-action__warning-text">
+                            <i class="icon icon--sm icon--attention mr-xs"></i><span id="check-in__info-text"
+                                class="text text--sm text--secondary">Entwertet das Ticket.</span>
+                        </div>
+                        <div class="print__badge check-in-action__center">
+                            <button class="check-in-action__button" id="printBadge" onclick="printBadge()"
+                                disabled>BADGE
+                                DRUCKEN</button>
+                        </div>
+                        <div class="check-in-action__warning-text">
+                            <i class="icon icon--sm icon--attention mr-xs"></i><span
+                                class="text text--sm text--secondary">Leitet einen Druckauftrag ein. (<a id="badge-url"
+                                    href="url">Badge</a>)</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </section>
+    <script src="index.js"></script>
+    <script src="node_modules/html5-qrcode/html5-qrcode.min.js" type="text/javascript"></script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+{
+    "name": "SCANdoo",
+    "short_name": "SCANdoo",
+    "icons": [
+      {
+        "src": "./assets/apple-touch-icon.png",
+        "sizes": "60x60",
+        "type": "image/png"
+      },
+      {
+        "src": "./assets/apple-touch-icon-76x76.png",
+        "sizes": "76x76",
+        "type": "image/png"
+      },
+      {
+        "src": "./assets/apple-touch-icon-120x120.png",
+        "sizes": "120x120",
+        "type": "image/png"
+      },
+      {
+        "src": "./assets/apple-touch-icon-150x150.png",
+        "sizes": "150x150",
+        "type": "image/png"
+      }
+    ],
+    "theme_color": "#FFFFFF",
+    "background_color": "#FFFFFF",
+    "start_url": "/scandoo/",
+    "display": "standalone",
+    "orientation": "portrait"
+  }
