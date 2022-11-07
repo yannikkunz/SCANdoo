@@ -1,6 +1,7 @@
 
 function onScanSuccess(qrCodeMessage) {
   document.getElementById("ticket-hash__input").value = qrCodeMessage.slice(-8);
+  getTicketInfo(qrCodeMessage.slice(-8));
 }
 function onScanError(errorMessage) {
   //handle scan error
