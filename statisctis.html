@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Check-in service</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="crossorigin" />
+    <link rel="shortcut icon" type="image/png" href="https://doo.net/checkin/static/icons/favicon-32.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="https://doo.net/checkin/static/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="60x60" href="https://doo.net/checkin/static/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="https://doo.net/checkin/static/icons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://doo.net/checkin/static/icons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://doo.net/checkin/static/icons/apple-touch-icon-152x152.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
+    <link rel="stylesheet" href="stylesheet.css" />
+</head>
+<script>
+    // Check that service workers are supported
+    if ("serviceWorker" in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("./sw.js");
+        });
+    }
+</script>
+
+<body>
+    <header class="check-in__header">
+        <div class="container">
+            <div class="row">
+                <a id="back-to-checkin" href="index.html">&larr; Zurück</a>
+                <div class="check-in__logo">
+                    <img style="width: 80%;"
+                        src="https://doo-product-consulting-uploads.s3.eu-central-1.amazonaws.com/Scandoo/logo-blue-transparent.png">
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="info-numbers">
+        <div class="stat-number">
+            <p id="checked-in-attendees" class="number">1284</p>
+            <p class="number-description"> Teilnehmer <br> eingecheckt</p>
+        </div>
+        <div class="stat-number">
+            <p id="all-attendees" class="number">1596</p>
+            <p class="number-description"> Teilnehmer <br> registriert</p>
+        </div>
+    </div>
+    <div class="doughnut-chart">
+        <canvas id="checked-in-doughnut" style="width:100%;max-width:700px"></canvas>
+    </div>
+    <div class="bar-chart">
+        <canvas id="timeline-chart" style="width:100%;max-width:700px"></canvas>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="statistics.js"></script>
+</body>
+
+</html>
