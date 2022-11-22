@@ -83,29 +83,11 @@ Chart.pluginService.register({
 });
 
 var xValues = ["nicht eingecheckt", "eingecheckt"];
-var yValues = [0, 0];
+var yValues = [localStorage.getItem("remainingTicketCount"), localStorage.getItem("checkedInCount")];
 var barColors = ["#D3D3D3", "#5ad0bf"];
-var eventID = 117922;
 
-var xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function () {
-  if (this.readyState == 4 && this.status == 200) {
-    var obj = JSON.parse(this.responseText);
-    yValues[0] = Number(obj.allAttendees) - Number(obj.checkedInAttendees);
-    yValues[1] = Number(obj.checkedInAttendees);
-    document.getElementById("checked-in-attendees").innerHTML = obj.checkedInAttendees;
-    document.getElementById("all-attendees").innerHTML = obj.allAttendees;
-  }
-};
-
-xmlhttp.open(
-  "GET",
-  "https://hook.doo.integromat.celonis.com/qz6prrg36wf78qbwvuo7bqhpsrd0v1wt?eid=" +
-    eventID,
-  false
-);
-xmlhttp.setRequestHeader("Content-type", "application/json");
-xmlhttp.send();
+document.getElementById("checked-in-attendees").innerHTML = localStorage.getItem("checkedInCount");
+document.getElementById("all-attendees").innerHTML = localStorage.getItem("ticketCount");
 
 new Chart("checked-in-doughnut", {
   type: "doughnut",

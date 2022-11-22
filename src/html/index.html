@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8" />
@@ -17,9 +17,14 @@
     <link rel="apple-touch-icon" sizes="152x152"
         href="https://doo.net/checkin/static/icons/apple-touch-icon-152x152.png" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
-    <link rel="stylesheet" href="stylesheet.css" />
+    <link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/src/css/stylesheet.css" />
+    <link rel="stylesheet" href="/src/css/menu.css" />
 </head>
+
 <script>
+    /*
     // Check that service workers are supported
     if ("serviceWorker" in navigator) {
         // Use the window load event to keep the page load performant
@@ -27,36 +32,69 @@
             navigator.serviceWorker.register("./sw.js");
         });
     }
+    */
 </script>
 
 <body>
+    <!-- Menu -->
+    <div class="menu-container">
+        <button id="burger" class="open-main-nav">
+            <span class="burger"></span>
+            <span class="burger-text">Menu</span>
+        </button>
+        <div class="main-nav" id="main-nav">
+            <ul>
+                <li>
+                    <a href="/src/html/index.html">Check In</a>
+                </li>
+                <li>
+                    <a href="/src/html/statistics.html">Statistik</a>
+                </li>
+                <li>
+                    <a href="/src/html/settings.html">Einstellungen</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <!-- Search Overlay -->
+    <div class="menu-container">
+        <button class="openBtn" onclick="openSearch()"><i class="fa fa-search"></i><span
+                class="burger-text">Search</span></button>
+    </div>
+    <div id="myOverlay" class="overlay">
+        <span class="closebtn" onclick="closeSearch()" title="Close Overlay">×</span>
+        <div class="overlay-content">
+            <p class="overlay-heading">Ticketsuche</p>
+            <p class="overlay-text">Gebe einen Ticket-Hash, um danach zu suchen.</p>
+
+            <div class="searchInput">
+                <input id="searchTicketInput" type="text" placeholder="Search.." name="search">
+                <button class="openBtn" onclick="searchTicket()"><i class="fa fa-search"></i><span
+                        class="burger-text">Search</span></button>
+            </div>
+        </div>
+    </div>
+    <!-- Main Body-->
     <section class="check-in">
         <header class="check-in__header">
             <div class="container">
                 <div class="row">
-                    <div class="check-in__status">
+                    <div class="check-in__status" style="display: none;">
                         <div class="check-in-action">
                             <div class="check-in__input">
                                 <form>
                                     <input id="ticket-hash__input" placeholder="Ticket-Hash"
-                                        style="height: 36px;width:250px" type="text"
-                                        onkeyup="getTicketInfo(this.value)">
+                                        style="height: 36px; width: 250px" type="text"
+                                        onkeyup="processTicketHash('getinfo')" />
                                 </form>
-                                <div class="qr-code-toggle">
-                                    <div class="button r" id="button-1">
-                                        <input id="qr-checkbox" type="checkbox" class="checkbox"
-                                            onclick="openQrScanner()" />
-                                        <div class="knobs"></div>
-                                        <div class="layer"></div>
-                                    </div>
-                                </div>
 
                             </div>
                         </div>
                     </div>
                     <div class="check-in__logo">
-                        <img style="width: 40%;" id="checkmark"
-                            src="https://doo-product-consulting-uploads.s3.eu-central-1.amazonaws.com/Scandoo/logo-blue-transparent.png">
+                        <img style="width: 60%" id="checkmark"
+                            src="https://doo-product-consulting-uploads.s3.eu-central-1.amazonaws.com/Scandoo/logo-blue-transparent.png" />
                     </div>
                     <div class="check-in__attendee">
                         <h2 id="name" class="attendee__name"></h2>
@@ -66,7 +104,7 @@
         </header>
         <div class="row">
             <div class="col">
-                <div style="width:100%;" id="reader"></div>
+                <div style="width: 100%" id="reader"></div>
             </div>
         </div>
         <section class="check-in__content">
@@ -74,9 +112,11 @@
                 <div class="row">
                     <div class="check-in__booking-summary">
                         <h3 class="check-in__ticket">
-                            <div class="check-in__ticket-icon"><i class="icon icon--lg icon--tickets"></i>
+                            <div class="check-in__ticket-icon">
+                                <i class="icon icon--lg icon--tickets"></i>
                                 <div class="check-in__ticket-icon-background"></div>
-                            </div><span id="ticketCategory"></span>
+                            </div>
+                            <span id="ticketCategory"></span>
                         </h3>
                     </div>
                     <div class="check-in__sections-separator">
@@ -104,35 +144,34 @@
                             </div>
                         </div>
                     </div>
-                    <div class="check-in-action ">
-                        <div class="check-in-action__center">
-                            <button class="check-in-action__button" id="checkinBtn" onclick="checkInTicket()"
-                                disabled>EINCHECKEN</button>
-                        </div>
-                        <div class="check-in-action__warning-text">
-                            <i class="icon icon--sm icon--attention mr-xs"></i><span id="check-in__info-text"
-                                class="text text--sm text--secondary">Entwertet das Ticket.</span>
-                        </div>
-                        <div class="print__badge check-in-action__center">
-                            <button class="check-in-action__button" id="printBadge" onclick="printBadge()"
-                                disabled>BADGE
-                                DRUCKEN</button>
-                        </div>
-                        <div class="check-in-action__warning-text">
-                            <i class="icon icon--sm icon--attention mr-xs"></i><span
-                                class="text text--sm text--secondary">Leitet einen Druckauftrag ein. (<a id="badge-url"
-                                    href="url">Badge</a>)</span>
-                        </div>
-                        <div class="statistics-link-container">
-                            <a id="statistics-link" href="statisctis.html">Check-In Statistik ansehen</a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </section>
     </section>
-    <script src="index.js"></script>
+    <div class="check-in-action footer">
+        <div class="check-in-action__center">
+            <button class="check-in-action__button" id="checkinBtn" onclick="processTicketHash('checkin')" disabled>
+                EINCHECKEN
+            </button>
+        </div>
+        <div class="check-in-action__warning-text">
+            <i class="icon icon--sm icon--attention mr-xs"></i><span id="check-in__info-text"
+                class="text text--sm text--secondary">Entwertet das Ticket.</span>
+        </div>
+        <div class="print__badge check-in-action__center">
+            <button class="check-in-action__button" id="printBadge" onclick="printBadge()" disabled>
+                BADGE DRUCKEN
+            </button>
+        </div>
+        <div class="check-in-action__warning-text">
+            <i class="icon icon--sm icon--attention mr-xs"></i><span class="text text--sm text--secondary">Leitet einen
+                Druckauftrag ein. (<a id="badge-url" href="url">Badge</a>)</span>
+        </div>
+    </div>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="/src/js/index.js"></script>
+    <script src="/src/js/menu.js"></script>
 </body>
-
 </html>

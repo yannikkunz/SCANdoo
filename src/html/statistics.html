@@ -17,9 +17,11 @@
     <link rel="apple-touch-icon" sizes="152x152"
         href="https://doo.net/checkin/static/icons/apple-touch-icon-152x152.png" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
-    <link rel="stylesheet" href="stylesheet.css" />
+    <link rel="stylesheet" href="/src/css/stylesheet.css" />
+    <link rel="stylesheet" href="/src/css/menu.css" />
 </head>
 <script>
+    /*
     // Check that service workers are supported
     if ("serviceWorker" in navigator) {
         // Use the window load event to keep the page load performant
@@ -27,15 +29,35 @@
             navigator.serviceWorker.register("./sw.js");
         });
     }
+    */
 </script>
 
 <body>
+    <div class="menu-container">
+        <button id="burger" class="open-main-nav">
+            <span class="burger"></span>
+            <span class="burger-text">Menu</span>
+        </button>
+        <div class="main-nav" id="main-nav">
+            <ul>
+                <li>
+                    <a href="/src/html/index.html">Check In</a>
+                </li>
+                <li>
+                    <a href="/src/html/statistics.html">Statistik</a>
+                </li>
+                <li>
+                    <a href="/src/html/settings.html">Einstellungen</a>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
     <header class="check-in__header">
         <div class="container">
             <div class="row">
-                <a id="back-to-checkin" href="index.html">&larr; Zurück</a>
                 <div class="check-in__logo">
-                    <img style="width: 80%;"
+                    <img style="width: 60%;"
                         src="https://doo-product-consulting-uploads.s3.eu-central-1.amazonaws.com/Scandoo/logo-blue-transparent.png">
                 </div>
             </div>
@@ -43,11 +65,11 @@
     </header>
     <div class="info-numbers">
         <div class="stat-number">
-            <p id="checked-in-attendees" class="number">1284</p>
+            <p id="checked-in-attendees" class="number"></p>
             <p class="number-description"> Teilnehmer <br> eingecheckt</p>
         </div>
         <div class="stat-number">
-            <p id="all-attendees" class="number">1596</p>
+            <p id="all-attendees" class="number"></p>
             <p class="number-description"> Teilnehmer <br> registriert</p>
         </div>
     </div>
@@ -58,7 +80,8 @@
         <canvas id="timeline-chart" style="width:100%;max-width:700px"></canvas>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    <script src="statistics.js"></script>
+    <script src="/src/js/statistics.js"></script>
+    <script src="/src/js/menu.js"></script>
 </body>
 
 </html>

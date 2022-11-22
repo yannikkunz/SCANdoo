@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Check-in service</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="crossorigin" />
+    <link rel="shortcut icon" type="image/png" href="https://doo.net/checkin/static/icons/favicon-32.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="https://doo.net/checkin/static/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="60x60" href="https://doo.net/checkin/static/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="https://doo.net/checkin/static/icons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://doo.net/checkin/static/icons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://doo.net/checkin/static/icons/apple-touch-icon-152x152.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
+    <link rel="stylesheet" href="/src/css/stylesheet.css" />
+    <link rel="stylesheet" href="/src/css/menu.css" />
+</head>
+
+<script>
+    /*
+    // Check that service workers are supported
+    if ("serviceWorker" in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("./sw.js");
+        });
+    }
+    */
+</script>
+
+<body>
+    <div class="menu-container">
+        <button id="burger" class="open-main-nav">
+            <span class="burger"></span>
+            <span class="burger-text">Menu</span>
+        </button>
+        <div class="main-nav" id="main-nav">
+            <ul>
+                <li>
+                    <a href="/src/html/index.html">Check In</a>
+                </li>
+                <li>
+                    <a href="/src/html/statistics.html">Statistik</a>
+                </li>
+                <li>
+                    <a href="/src/html/settings.html">Einstellungen</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <section class="check-in">
+        <header class="check-in__header">
+            <div class="container">
+                <div class="row">
+                    <div class="check-in__logo">
+                        <img style="width: 60%" id="checkmark"
+                            src="https://doo-product-consulting-uploads.s3.eu-central-1.amazonaws.com/Scandoo/logo-blue-transparent.png" />
+                    </div>
+
+                </div>
+            </div>
+        </header>
+    </section>
+    <div class="settings">
+        <div class="settings-group">
+            <div class="connection-settings-header">
+                <p class="settings-heading">Verbindungseinstellungen</p>
+                <button id="edit-settings" type="button" class="edit-button">
+                    <span class="glyphicon glyphicon-edit"></span> Edit
+                </button>
+            </div>
+            <div class="form__group">
+                <input type="text" class="form__input" id="webhookURL" placeholder="Webhook URL" disabled />
+                <label for="name" class="form__label">Webhook URL</label>
+            </div>
+            <div class="form__group">
+                <input type="text" class="form__input" id="oid" placeholder="OID" disabled />
+                <label for="name" class="form__label">OID</label>
+            </div>
+            <div class="form__group">
+                <input type="text" class="form__input" id="eid" placeholder="EID"  disabled/>
+                <label for="name" class="form__label">EID</label>
+            </div>
+            <button id="submit-settings" class="submit-settings check-in-action__button" disabled style="display: none">SPEICHERN</button>
+        </div>
+        <div class="settings-group">
+            <p class="settings-heading">App Einstellungen</p>
+            <table class="switch-table">
+                <tr>
+                    <td>
+                        QR-Code Scanner
+                    </td>
+                    <td>
+                        <label class="switch">
+                            <input id="QrCodeActivated" type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Auto Checkin
+                    </td>
+                    <td>
+                        <label class="switch">
+                            <input id="autoCheckinActivated" type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Auto Badge Druck
+                    </td>
+                    <td>
+                        <label id="autoBadgePrintActivated" class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="settings-group">
+            <p class="settings-heading">Check-In Einstellungen</p>
+            <div class="wrapper">
+                <input type="radio" name="select" id="option-1" checked>
+                <input type="radio" name="select" id="option-2">
+                <label for="option-1" class="option option-1">
+                    <span>doo Checkin</span>
+                </label>
+                <label for="option-2" class="option option-2">
+                    <span>Scandoo</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="/src/js/menu.js"></script>
+    <script src="/src/js/settings.js"></script>
+</body>
+
+</html>
