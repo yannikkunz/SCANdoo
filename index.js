@@ -21,10 +21,14 @@ function onScanError(errorMessage) {
 
 // Request to make scenario to get information 
 function processTicketHash(requestType, ticketHash) {
+  if(requestType === "getInfo"){
+    localStorage.setItem("ticketHash", ticketHash);
+  }
   console.log("ProcessTicketHash - Type: " + requestType +", Hash: " + ticketHash );
   if (ticketHash.length == 8) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
+      console.log(this.responseText);
       if (this.readyState == 4 && this.status == 200) {
         var obj = JSON.parse(this.responseText);
         processTicketResponse(obj);
@@ -136,7 +140,7 @@ function closeSearch() {
 }
 
 function searchTicket() {
-  processTicketHash("getInfo", document.getElementById("searchTicketInput").value);
   closeSearch();
+  processTicketHash("getInfo", document.getElementById("searchTicketInput").value);
   document.getElementById("searchTicketInput").value = "";
 }
