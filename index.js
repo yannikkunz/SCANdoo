@@ -1,5 +1,6 @@
 // QR Code Scanner
 function onScanSuccess(qrCodeMessage) {
+  // Get last 8 chars of the scanned input so we can scan ticket hashs & checkin links
   processTicketHash("getInfo", qrCodeMessage.slice(-8));
 }
 
@@ -26,7 +27,7 @@ function processTicketHash(requestType, ticketHash) {
     xmlhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         var obj = JSON.parse(this.responseText);
-        showTicketInfo(obj);
+        processTicketResponse(obj);
       } else if (this.readyState == 4 && this.status == 400) {
         showFailedTicketInfo();
       }
@@ -41,6 +42,7 @@ function processTicketHash(requestType, ticketHash) {
   }
 }
 
+// Update the current numbers of the statistics
 function updateStatistics() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function () {
@@ -73,7 +75,7 @@ function clearAttendeeData() {
   document.getElementById("checkinBtn").disabled = true;
 }
 
-function showTicketInfo(obj) {
+function processTicketResponse(obj) {
   document.getElementById("check-in__info-text").classList.remove("red-text");
   document.getElementById("name").innerHTML = obj.firstName + " " + obj.lastName;
   document.getElementById("event").innerHTML = obj.event;
@@ -84,7 +86,7 @@ function showTicketInfo(obj) {
     "https://doo-product-consulting-uploads.s3.eu-central-1.amazonaws.com/Scandoo/logo-blue-transparent.png";
 
   // Activate Check-in
-  if (obj.checkinAvailable === "true") {
+  if (obj.checkinAvailable === "true" && obj.checkedIn === "false") {
     document.getElementById("checkinBtn").disabled = false;
   } else {
     document.getElementById("checkinBtn").disabled = true;
@@ -96,7 +98,7 @@ function showTicketInfo(obj) {
   // Activate Badge printing
   if (obj.printBadge === "true") {
     document.getElementById("printBadge").disabled = false;
-    document.getElementById("badge-url").href = obj.badgeURL;
+    document.getElementById("badge-url").href = "badges/" + obj.ticketHash + ".pdf";
   }
 }
 
