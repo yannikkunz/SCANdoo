@@ -74,7 +74,7 @@
                         class="burger-text">Search</span></button>
             </div>
         </div>
-    </div>
+    </div>    
     <!-- Main Body-->
     <section class="check-in">
         <header class="check-in__header">
@@ -151,7 +151,7 @@
     </section>
     <div class="check-in-action footer">
         <div class="check-in-action__center">
-            <button class="check-in-action__button" id="checkinBtn" onclick="processTicketHash('checkin')" disabled>
+            <button class="check-in-action__button" id="checkinBtn" onclick="processTicketHash('checkin', localStorage.getItem('ticketHash'))" disabled>
                 EINCHECKEN
             </button>
         </div>
