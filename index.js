@@ -98,7 +98,7 @@ function processTicketResponse(obj) {
   // Activate Badge printing
   if (obj.printBadge === "true") {
     document.getElementById("printBadge").disabled = false;
-    document.getElementById("badge-url").href = "badges/" + obj.ticketHash + ".pdf";
+    document.getElementById("badge-url").href = "https://yannikkunz.github.io/SCANdoo/badges/" + obj.ticketHash + ".pdf";
   }
 }
 
