@@ -6382,3 +6382,37 @@ button.openBtn {
   display:flex;
   justify-content: center;
 }
+
+.qr-container {
+  text-align:center;
+  width: 100%
+}
+
+#reader{
+  width: 80%;
+  margin: 0 auto;
+  border: none !important
+}
+
+button#html5-qrcode-button-camera-start,
+button#html5-qrcode-button-camera-stop {
+    font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  color: #fff;
+  background-color: #5ad0bf;
+  border: none;
+  border-radius: 4px;
+  outline: 0;
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  padding: 7px 40px;
+}
+
+#html5-qrcode-anchor-scan-type-change {
+  display:none !important
+}
+
+.doo-logo {
+  width: 50%;
+  padding: 10px;
+}

@@ -1,3 +1,26 @@
+// Update the current numbers of the statistics
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function () {
+  if (this.readyState == 4 && this.status == 200) {
+    var obj = JSON.parse(this.responseText);
+    localStorage.setItem(
+      "remainingTicketCount",
+      Number(obj.allAttendees) - Number(obj.checkedInAttendees)
+    );
+    localStorage.setItem("checkedInCount", Number(obj.checkedInAttendees));
+    localStorage.setItem("ticketCount", Number(obj.allAttendees));
+  }
+};
+
+xmlhttp.open(
+  "GET",
+  "https://hook.doo.integromat.celonis.com/qz6prrg36wf78qbwvuo7bqhpsrd0v1wt?eid=" +
+    localStorage.getItem("eid"),
+  false
+);
+xmlhttp.setRequestHeader("Content-type", "application/json");
+xmlhttp.send();
+
 Chart.pluginService.register({
   beforeDraw: function (chart) {
     if (chart.config.options.elements.center) {
@@ -83,11 +106,16 @@ Chart.pluginService.register({
 });
 
 var xValues = ["nicht eingecheckt", "eingecheckt"];
-var yValues = [localStorage.getItem("remainingTicketCount"), localStorage.getItem("checkedInCount")];
+var yValues = [
+  localStorage.getItem("remainingTicketCount"),
+  localStorage.getItem("checkedInCount"),
+];
 var barColors = ["#D3D3D3", "#5ad0bf"];
 
-document.getElementById("checked-in-attendees").innerHTML = localStorage.getItem("checkedInCount");
-document.getElementById("all-attendees").innerHTML = localStorage.getItem("ticketCount");
+document.getElementById("checked-in-attendees").innerHTML =
+  localStorage.getItem("checkedInCount");
+document.getElementById("all-attendees").innerHTML =
+  localStorage.getItem("ticketCount");
 
 new Chart("checked-in-doughnut", {
   type: "doughnut",

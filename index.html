@@ -74,27 +74,18 @@
                         class="burger-text">Search</span></button>
             </div>
         </div>
-    </div>    
+    </div>
     <!-- Main Body-->
     <section class="check-in">
         <header class="check-in__header">
             <div class="container">
                 <div class="row">
-                    <div class="check-in__status" style="display: none;">
-                        <div class="check-in-action">
-                            <div class="check-in__input">
-                                <form>
-                                    <input id="ticket-hash__input" placeholder="Ticket-Hash"
-                                        style="height: 36px; width: 250px" type="text"
-                                        onkeyup="processTicketHash('getinfo')" />
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
                     <div class="check-in__logo">
-                        <img style="width: 60%" id="checkmark"
-                            src="https://doo-product-consulting-uploads.s3.eu-central-1.amazonaws.com/Scandoo/logo-blue-transparent.png" />
+                        <img class="doo-logo" id="checkmark"
+                            src="assets/logo+doo+white2048-1920w.png" />
+                    </div>
+                    <div class="qr-container">
+                        <div id="reader"></div>
                     </div>
                     <div class="check-in__attendee">
                         <h2 id="name" class="attendee__name"></h2>
@@ -104,7 +95,7 @@
         </header>
         <div class="row">
             <div class="col">
-                <div style="width: 100%" id="reader"></div>
+
             </div>
         </div>
         <section class="check-in__content">
@@ -151,7 +142,8 @@
     </section>
     <div class="check-in-action footer">
         <div class="check-in-action__center">
-            <button class="check-in-action__button" id="checkinBtn" onclick="processTicketHash('checkin', localStorage.getItem('ticketHash'))" disabled>
+            <button class="check-in-action__button" id="checkinBtn"
+                onclick="processTicketHash('checkin', localStorage.getItem('ticketHash'))" disabled>
                 EINCHECKEN
             </button>
         </div>
@@ -174,4 +166,5 @@
     <script src="index.js"></script>
     <script src="menu.js"></script>
 </body>
+
 </html>
