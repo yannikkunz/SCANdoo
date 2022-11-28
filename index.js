@@ -8,23 +8,26 @@ function onScanError(errorMessage) {
   //handle scan error
 }
 
-
-  if (localStorage.getItem("QrCodeActivated") === "true") {
-    console.log("Activate QR Code Scanner");
-    html5QrcodeScanner = new Html5QrcodeScanner("reader", {
-      fps: 10,
-      qrbox: 250,
-    });
-    html5QrcodeScanner.render(onScanSuccess, onScanError);
-  }
+if (localStorage.getItem("QrCodeActivated") === "true") {
+  console.log("Activate QR Code Scanner");
+  html5QrcodeScanner = new Html5QrcodeScanner("reader", {
+    fps: 10,
+    qrbox: 250,
+  });
+  html5QrcodeScanner.render(onScanSuccess, onScanError);
+}
 
 
 // Request to make scenario to get information 
 function processTicketHash(requestType, ticketHash) {
-  if(requestType === "getInfo"){
-    localStorage.setItem("ticketHash", ticketHash);
-  }
+  
   console.log("ProcessTicketHash - Type: " + requestType +", Hash: " + ticketHash );
+  console.time();
+  
+  if(requestType === "getInfo"){
+    localStorage.setItem("ticketHash", ticketHash)
+  }
+  
   if (ticketHash.length == 8) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -43,11 +46,10 @@ function processTicketHash(requestType, ticketHash) {
   } else {
     clearAttendeeData();
   }
+  console.timeEnd();
 }
 
 function clearAttendeeData() {
-  document.getElementById("checkmark").src =
-    "https://doo-product-consulting-uploads.s3.eu-central-1.amazonaws.com/Scandoo/logo-blue-transparent.png";
   document.getElementById("name").innerHTML = "";
   document.getElementById("event").innerHTML = "";
   document.getElementById("ticketCategory").innerHTML = "";
@@ -94,6 +96,10 @@ function printBadge() {
 // Ticket Search
 function openSearch() {
   document.getElementById("myOverlay").style.display = "block";
+}
+
+function closeSearch() {
+  document.getElementById("myOverlay").style.display = "none";
 }
 
 function searchTicket() {
