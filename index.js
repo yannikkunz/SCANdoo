@@ -10,9 +10,11 @@ function onScanError(errorMessage) {
 
 if (localStorage.getItem("QrCodeActivated") === "true") {
   console.log("Activate QR Code Scanner");
+  document.getElementById("checkmark").style.display = "none";
   html5QrcodeScanner = new Html5QrcodeScanner("reader", {
     fps: 10,
     qrbox: 250,
+    aspectRatio: 1.0
   });
   html5QrcodeScanner.render(onScanSuccess, onScanError);
 }
@@ -31,10 +33,8 @@ function processTicketHash(requestType, ticketHash) {
   if (ticketHash.length == 8) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
-      console.log(this.responseText);
       if (this.readyState == 4 && this.status == 200) {
-        var obj = JSON.parse(this.responseText);
-        processTicketResponse(obj);
+        processTicketResponse(JSON.parse(this.responseText));
       } else if (this.readyState == 4 && this.status == 400) {
         showFailedTicketInfo();
       }
@@ -46,7 +46,6 @@ function processTicketHash(requestType, ticketHash) {
   } else {
     clearAttendeeData();
   }
-  console.timeEnd();
 }
 
 function clearAttendeeData() {
@@ -66,13 +65,14 @@ function processTicketResponse(obj) {
   document.getElementById("booking-id").innerHTML = obj.bookingNumber;
   document.getElementById("entries").innerHTML = obj.entries.replace(/\s/g, "<br>");
 
+  document.getElementById("check-in__content").style.display = "block";
+
   // Activate Check-in
   if (obj.checkinAvailable === "true" && obj.checkedIn === "false") {
     document.getElementById("checkinBtn").disabled = false;
   } else {
     document.getElementById("checkinBtn").disabled = true;
-    document.getElementById("check-in__info-text").innerHTML =
-      "Check-in nicht mehr verfügbar";
+    document.getElementById("check-in__info-text").innerHTML = "Check-in nicht mehr verfügbar";
     document.getElementById("check-in__info-text").classList.add("red-text");
   }
 
@@ -81,6 +81,7 @@ function processTicketResponse(obj) {
     document.getElementById("printBadge").disabled = false;
     document.getElementById("badge-url").href = "https://yannikkunz.github.io/SCANdoo/badges/" + obj.ticketHash + ".pdf";
   }
+  console.timeEnd();
 }
 
 function showFailedTicketInfo() {

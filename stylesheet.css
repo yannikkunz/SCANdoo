@@ -1,6 +1,16 @@
 html {
   box-sizing: border-box;
-  -ms-overflow-style: scrollbar;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+
+  overscroll-behavior: none;
 }
 
 *,
@@ -5403,8 +5413,8 @@ h5 {
 
 .attendee__name {
   color: #fff;
-  font-weight: 400;
-  font-size: 24px;
+  font-weight: 600;
+  font-size: 28px;
 }
 
 @media (min-width: 768px) {
@@ -5551,8 +5561,10 @@ h5 {
 }
 
 .check-in__content {
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 250px;
+  display: none;
 }
 
 @media (min-width: 768px) {
@@ -5588,8 +5600,8 @@ h5 {
   display: block;
   position: relative;
   width: 100%;
-  padding-right: 12px;
-  padding-left: 12px;
+  padding-right: 10%;
+  padding-left: 10%;
 }
 
 @media (min-width: 768px) {
@@ -5608,17 +5620,19 @@ h5 {
 
 .check-in__sections-separator-line {
   height: 1px;
-  margin-top: 30px;
-  margin-bottom: 24px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   background: #c7c9d1;
 }
 
 .check-in__ticket {
-  position: relative;
   font-weight: 400;
-  padding-left: 40px;
   font-size: 16px;
   line-height: 32px;
+}
+
+.check-in__ticket *{
+  vertical-align:middle
 }
 
 @media (min-width: 768px) {
@@ -5645,7 +5659,6 @@ h5 {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #fff;
 }
 
 .check-in__booking-info {
@@ -6385,7 +6398,8 @@ button.openBtn {
 
 .qr-container {
   text-align:center;
-  width: 100%
+  width: 100%;
+  padding-top: 40px;
 }
 
 #reader{
