@@ -1,5 +1,10 @@
+var audio = new Audio('assets/beep-104060.mp3');
+
 // QR Code Scanner
 function onScanSuccess(qrCodeMessage) {
+  
+  audio.play();
+
   // Get last 8 chars of the scanned input so we can scan ticket hashs & checkin links
   processTicketHash("getInfo", qrCodeMessage.slice(-8));
 }
