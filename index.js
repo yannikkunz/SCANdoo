@@ -18,8 +18,8 @@ if (localStorage.getItem("QrCodeActivated") === "true") {
   document.getElementById("checkmark").style.display = "none";
   html5QrcodeScanner = new Html5QrcodeScanner("reader", {
     fps: 10,
-    qrbox: 250,
-    aspectRatio: 1.0
+    qrbox: 200,
+    //aspectRatio: 1.0
   });
   html5QrcodeScanner.render(onScanSuccess, onScanError);
 }

@@ -4,12 +4,18 @@ html {
   scrollbar-width: none;
 }
 
+.element::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 0;
+  height: 0;
+}
+
 html::-webkit-scrollbar {
   display: none;
 }
 
 body {
-
+  overscroll-behavior-y: none;
   overscroll-behavior: none;
 }
 
@@ -5368,9 +5374,9 @@ h5 {
 }
 
 .check-in__header {
+  padding-bottom: 10px;
   display: flex;
   align-items: center;
-  padding: 20px 0;
   background: linear-gradient(
     40.06deg,
     #0169b5 0,
@@ -5877,7 +5883,7 @@ h5 {
   cursor: pointer;
   height: 52px;
   width: 80%;
-  margin-top: 22px;
+  margin-bottom: 5px;
 }
 
 .check-in-action__button[disabled] {
@@ -6306,6 +6312,7 @@ input[type="radio"]{
   border: none;
   font-size: 20px;
   cursor: pointer;
+  z-index: 1;
 }
 
 .overlay {
@@ -6399,13 +6406,11 @@ button.openBtn {
 .qr-container {
   text-align:center;
   width: 100%;
-  padding-top: 40px;
 }
 
 #reader{
-  width: 80%;
   margin: 0 auto;
-  border: none !important
+  border: none !important;
 }
 
 button#html5-qrcode-button-camera-start,
