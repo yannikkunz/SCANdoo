@@ -1,4 +1,5 @@
 var audio;
+var lastScan;
 
 function activateAudio() {
   audio = new Audio('assets/beep-104060.mp3');
@@ -12,8 +13,15 @@ function onScanSuccess(qrCodeMessage) {
   
   audio.play();
 
+  var ticketHash = qrCodeMessage.slice(-8)
+  
+
   // Get last 8 chars of the scanned input so we can scan ticket hashs & checkin links
-  processTicketHash("getInfo", qrCodeMessage.slice(-8));
+  if (lastScan != ticketHash) {
+    processTicketHash("getInfo", ticketHash );
+    lastScan = ticketHash;
+  }
+  
 }
 
 function onScanError(errorMessage) {
@@ -26,7 +34,7 @@ if (localStorage.getItem("QrCodeActivated") === "true") {
   html5QrcodeScanner = new Html5QrcodeScanner("reader", {
     fps: 10,
     qrbox: 150,
-    aspectRatio: 0.5, // for mobile 0.5
+    aspectRatio: 1, // for mobile 0.5
   });
   html5QrcodeScanner.render(onScanSuccess, onScanError);
 }
@@ -34,6 +42,8 @@ if (localStorage.getItem("QrCodeActivated") === "true") {
 
 // Request to make scenario to get information 
 function processTicketHash(requestType, ticketHash) {
+
+  document.getElementById("loader-container").style.display = "block";
   
   console.log("ProcessTicketHash - Type: " + requestType +", Hash: " + ticketHash );
   console.time();
@@ -94,6 +104,7 @@ function processTicketResponse(obj) {
     document.getElementById("badge-url").href = "https://yannikkunz.github.io/SCANdoo/badges/" + obj.ticketHash + ".pdf";
   }
   console.timeEnd();
+  document.getElementById("loader-container").style.display = "none";
 }
 
 function showFailedTicketInfo() {
