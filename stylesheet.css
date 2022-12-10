@@ -6417,6 +6417,10 @@ button.openBtn {
   border: none !important;
 }
 
+select#html5-qrcode-select-camera:disabled {
+  display: none
+}
+
 button#html5-qrcode-button-camera-start,
 button#html5-qrcode-button-camera-stop {
     font-family: "Open Sans", sans-serif;
@@ -6429,9 +6433,10 @@ button#html5-qrcode-button-camera-stop {
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.06);
   cursor: pointer;
   position: absolute;
-  top: 5px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
+  margin: 0;
 }
 
 #html5-qrcode-anchor-scan-type-change {
