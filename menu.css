@@ -90,7 +90,7 @@
 }
 
 .open-main-nav {
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	padding-top: 20px;
 	right: 0px;

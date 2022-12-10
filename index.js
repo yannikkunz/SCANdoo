@@ -1,4 +1,11 @@
-var audio = new Audio('assets/beep-104060.mp3');
+var audio;
+
+function activateAudio() {
+  audio = new Audio('assets/beep-104060.mp3');
+  audio.play();
+  document.getElementById("activateAudio").style.display = "none";
+  
+}
 
 // QR Code Scanner
 function onScanSuccess(qrCodeMessage) {
@@ -19,9 +26,13 @@ if (localStorage.getItem("QrCodeActivated") === "true") {
   html5QrcodeScanner = new Html5QrcodeScanner("reader", {
     fps: 10,
     qrbox: 150,
-    aspectRatio: 0.5
+    aspectRatio: 1, // for mobile 0.5
   });
   html5QrcodeScanner.render(onScanSuccess, onScanError);
+
+  document.getElementById('html5-qrcode-button-camera-start').addEventListener('click', () => {
+    audio.src = 'assets/beep-104060.mp3';
+  })
 }
 
 
