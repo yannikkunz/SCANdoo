@@ -29,10 +29,6 @@ if (localStorage.getItem("QrCodeActivated") === "true") {
     aspectRatio: 0.5, // for mobile 0.5
   });
   html5QrcodeScanner.render(onScanSuccess, onScanError);
-
-  document.getElementById('html5-qrcode-button-camera-start').addEventListener('click', () => {
-    audio.src = 'assets/beep-104060.mp3';
-  })
 }
 
 
