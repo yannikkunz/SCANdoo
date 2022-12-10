@@ -6435,3 +6435,7 @@ button#html5-qrcode-button-camera-stop {
   width: 50%;
   padding: 10px;
 }
+
+img[alt="Info icon"] {
+  display: none;
+}
