@@ -19,7 +19,7 @@ if (localStorage.getItem("QrCodeActivated") === "true") {
   html5QrcodeScanner = new Html5QrcodeScanner("reader", {
     fps: 10,
     qrbox: 150,
-    aspectRatio: 1.777778
+    aspectRatio: 0.5
   });
   html5QrcodeScanner.render(onScanSuccess, onScanError);
 }
