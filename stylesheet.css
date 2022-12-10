@@ -6428,7 +6428,10 @@ button#html5-qrcode-button-camera-stop {
   outline: 0;
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.06);
   cursor: pointer;
-  padding: 7px 40px;
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #html5-qrcode-anchor-scan-type-change {
