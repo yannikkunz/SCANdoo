@@ -30,11 +30,11 @@ function onScanError(errorMessage) {
 
 if (localStorage.getItem("QrCodeActivated") === "true") {
   console.log("Activate QR Code Scanner");
-  document.getElementById("checkmark").style.display = "none";
+  document.getElementById("reader-container").classList.remove("d-none");
   html5QrcodeScanner = new Html5QrcodeScanner("reader", {
     fps: 10,
     qrbox: 150,
-    aspectRatio: 0.6, // for mobile 0.5
+    aspectRatio: 1, // for mobile 0.5
   });
   html5QrcodeScanner.render(onScanSuccess, onScanError);
 }
@@ -81,19 +81,21 @@ function clearAttendeeData() {
 
 function processTicketResponse(obj) {
   document.getElementById("check-in__info-text").classList.remove("red-text");
+  
+
   document.getElementById("name").innerHTML = obj.firstName + " " + obj.lastName;
   document.getElementById("event").innerHTML = obj.event;
   document.getElementById("ticketCategory").innerHTML = obj.ticketCategory;
   document.getElementById("booking-id").innerHTML = obj.bookingNumber;
   document.getElementById("entries").innerHTML = obj.entries.replace(/\s/g, "<br>");
 
-  document.getElementById("check-in__content").style.display = "block";
-
   // Activate Check-in
   if (obj.checkinAvailable === "true" && obj.checkedIn === "false") {
+    document.getElementById("check-in__header").classList.add("background--green");
     document.getElementById("checkinBtn").disabled = false;
   } else {
     document.getElementById("checkinBtn").disabled = true;
+    document.getElementById("check-in__header").classList.add("background--red");
     document.getElementById("check-in__info-text").innerHTML = "Check-in nicht mehr verfügbar";
     document.getElementById("check-in__info-text").classList.add("red-text");
   }

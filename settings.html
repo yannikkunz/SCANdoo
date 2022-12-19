@@ -17,9 +17,12 @@
         href="https://doo.net/checkin/static/icons/apple-touch-icon-120x120.png" />
     <link rel="apple-touch-icon" sizes="152x152"
         href="https://doo.net/checkin/static/icons/apple-touch-icon-152x152.png" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
     <link rel="stylesheet" href="stylesheet.css" />
     <link rel="stylesheet" href="menu.css" />
+    <link rel="stylesheet" href="overlay.css" />
 </head>
 
 <script>
@@ -35,11 +38,8 @@
 </script>
 
 <body>
+    <!-- Menu Overlay-->
     <div class="menu-container">
-        <button id="burger" class="open-main-nav">
-            <span class="burger"></span>
-            <span class="burger-text">Menu</span>
-        </button>
         <div class="main-nav" id="main-nav">
             <ul>
                 <li>
@@ -55,90 +55,103 @@
 
         </div>
     </div>
-    <section class="check-in">
-        <header class="check-in__header">
-            <div class="container">
-                <div class="row">
-                    <div class="check-in__logo">
-                        <img style="width: 60%" id="checkmark"
-                            src="https://doo-product-consulting-uploads.s3.eu-central-1.amazonaws.com/Scandoo/logo-blue-transparent.png" />
+    <div class="container-fluid check-in__header sticky-top">
+        <div class="row pt-3">
+            <div class="check-in__logo col-12 text-center">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <button class="icon-white" id="menu"><i class="fa fa-bars"></i></button>
                     </div>
-
+                    <div class="row">
+                        <img class="col-6 offset-3 img-fluid pb-3 mx-auto" id="doo-logo" src="assets/logo+doo+white2048-1920w.png" />
+                    </div>
                 </div>
             </div>
-        </header>
-    </section>
-    <div class="settings">
-        <div class="settings-group">
-            <div class="connection-settings-header">
-                <p class="settings-heading">Verbindungseinstellungen</p>
-                <button id="edit-settings" type="button" class="edit-button">
-                    <span class="glyphicon glyphicon-edit"></span> Edit
-                </button>
-            </div>
-            <div class="form__group">
-                <input type="text" class="form__input" id="webhookURL" placeholder="Webhook URL" disabled />
-                <label for="name" class="form__label">Webhook URL</label>
-            </div>
-            <div class="form__group">
-                <input type="text" class="form__input" id="oid" placeholder="OID" disabled />
-                <label for="name" class="form__label">OID</label>
-            </div>
-            <div class="form__group">
-                <input type="text" class="form__input" id="eid" placeholder="EID"  disabled/>
-                <label for="name" class="form__label">EID</label>
-            </div>
-            <button id="submit-settings" class="submit-settings check-in-action__button" disabled style="display: none">SPEICHERN</button>
         </div>
-        <div class="settings-group">
-            <p class="settings-heading">App Einstellungen</p>
-            <table class="switch-table">
-                <tr>
-                    <td>
-                        QR-Code Scanner
-                    </td>
-                    <td>
-                        <label class="switch">
-                            <input id="QrCodeActivated" type="checkbox">
-                            <span class="slider round"></span>
+    </div>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-lg-4 my-3">
+                <div class="background--grey mx-1 p-3 h-100">
+                    <div class="d-flex align-items-baseline">
+                        <p class="text--md text--primary text-left pt-2 font-weight-bold text-uppercase">
+                            Verbindungseinstellungen</p>
+                        <button id="edit-settings" type="button" class="edit-button text--sm">
+                            <span class="glyphicon glyphicon-edit"></span> Edit
+                        </button>
+                    </div>
+                    <div class="mt-3">
+                        <input type="text" class="form__input" id="webhookURL" placeholder="Webhook URL" disabled />
+                        <label for="name" class="form__label">Webhook URL</label>
+                    </div>
+                    <div class="mt-3">
+                        <input type="text" class="form__input" id="oid" placeholder="OID" disabled />
+                        <label for="name" class="form__label">OID</label>
+                    </div>
+                    <div class="my-3">
+                        <input type="text" class="form__input" id="eid" placeholder="EID" disabled />
+                        <label for="name" class="form__label">EID</label>
+                    </div>
+                    <button id="submit-settings" class="my-3 btn btn-primary btn-lg btn-block" disabled
+                        style="display: none">SPEICHERN</button>
+                </div>
+            </div>
+            <div class="col-lg-4 my-3">
+                <div class="background--grey mx-1 p-3 h-100">
+                    <p class="text--md text--primary text-left pt-2 font-weight-bold text-uppercase">App Einstellungen
+                    </p>
+                    <table class="w-100">
+                        <tr>
+                            <td class="text text--sm text-left">
+                                QR-Code Scanner
+                            </td>
+                            <td class="text-right">
+                                <label class="switch">
+                                    <input id="QrCodeActivated" type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text text--sm text-left">
+                                Auto Checkin
+                            </td>
+                            <td class="text-right">
+                                <label class="switch">
+                                    <input id="autoCheckinActivated" type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text text--sm text-left">
+                                Auto Badge Druck
+                            </td>
+                            <td class="text-right">
+                                <label id="autoBadgePrintActivated" class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-4 my-3">
+                <div class="background--grey mx-1 p-3 h-100">
+                    <p class="text--md text--primary text-left pt-2 font-weight-bold text-uppercase">Check-In
+                        Einstellungen</p>
+                    <div class="wrapper">
+                        <input type="radio" name="select" id="option-1" checked>
+                        <input type="radio" name="select" id="option-2">
+                        <label for="option-1" class="option option-1">
+                            <span>doo Checkin</span>
                         </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Auto Checkin
-                    </td>
-                    <td>
-                        <label class="switch">
-                            <input id="autoCheckinActivated" type="checkbox">
-                            <span class="slider round"></span>
+                        <label for="option-2" class="option option-2">
+                            <span>Scandoo</span>
                         </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Auto Badge Druck
-                    </td>
-                    <td>
-                        <label id="autoBadgePrintActivated" class="switch">
-                            <input type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="settings-group">
-            <p class="settings-heading">Check-In Einstellungen</p>
-            <div class="wrapper">
-                <input type="radio" name="select" id="option-1" checked>
-                <input type="radio" name="select" id="option-2">
-                <label for="option-1" class="option option-1">
-                    <span>doo Checkin</span>
-                </label>
-                <label for="option-2" class="option option-2">
-                    <span>Scandoo</span>
-                </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
