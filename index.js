@@ -8,13 +8,30 @@ function activateAudio() {
   
 }
 
+// Scanner Input
+document.addEventListener('textInput', function (e){
+  if(e.data.length >= 8){
+      console.log('IR scan textInput', e.data);
+      audio.play();
+
+      var ticketHash = e.data.slice(-8)
+    
+      // Get last 8 chars of the scanned input so we can scan ticket hashs & checkin links
+      if (lastScan != ticketHash) {
+        processTicketHash("getInfo", ticketHash );
+        lastScan = ticketHash;
+      }
+      e.preventDefault();
+  }
+});
+
+
 // QR Code Scanner
 function onScanSuccess(qrCodeMessage) {
   
   audio.play();
 
   var ticketHash = qrCodeMessage.slice(-8)
-  
 
   // Get last 8 chars of the scanned input so we can scan ticket hashs & checkin links
   if (lastScan != ticketHash) {
@@ -43,6 +60,7 @@ if (localStorage.getItem("QrCodeActivated") === "true") {
 // Request to make scenario to get information 
 function processTicketHash(requestType, ticketHash) {
 
+  document.getElementById("ticketHash").innerHTML = ticketHash;
   document.getElementById("loader-container").style.display = "block";
   
   console.log("ProcessTicketHash - Type: " + requestType +", Hash: " + ticketHash );
@@ -70,6 +88,7 @@ function processTicketHash(requestType, ticketHash) {
   }
 }
 
+//Clear attendee data if scan was not successful
 function clearAttendeeData() {
   document.getElementById("name").innerHTML = "";
   document.getElementById("event").innerHTML = "";
@@ -79,15 +98,20 @@ function clearAttendeeData() {
   document.getElementById("checkinBtn").disabled = true;
 }
 
+
 function processTicketResponse(obj) {
   document.getElementById("check-in__info-text").classList.remove("red-text");
-  
 
   document.getElementById("name").innerHTML = obj.firstName + " " + obj.lastName;
   document.getElementById("event").innerHTML = obj.event;
-  document.getElementById("ticketCategory").innerHTML = obj.ticketCategory;
   document.getElementById("booking-id").innerHTML = obj.bookingNumber;
   document.getElementById("entries").innerHTML = obj.entries.replace(/\s/g, "<br>");
+
+
+  document.getElementById("ticketCategory").innerHTML = obj.ticketCategory;
+  document.getElementById("valid_from").innerHTML = obj.validFrom;
+  document.getElementById("valid_till").innerHTML = obj.validTill;
+  document.getElementById("max_entries").innerHTML = obj.maxEntries;
 
   // Activate Check-in
   if (obj.checkinAvailable === "true" && obj.checkedIn === "false") {
@@ -96,7 +120,7 @@ function processTicketResponse(obj) {
   } else {
     document.getElementById("checkinBtn").disabled = true;
     document.getElementById("check-in__header").classList.add("background--red");
-    document.getElementById("check-in__info-text").innerHTML = "Check-in nicht mehr verfügbar";
+    document.getElementById("check-in__info-text").innerHTML = "Check-in nicht verfügbar";
     document.getElementById("check-in__info-text").classList.add("red-text");
   }
 
