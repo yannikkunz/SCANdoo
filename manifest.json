@@ -25,7 +25,6 @@
     ],
     "theme_color": "#FFFFFF",
     "background_color": "#FFFFFF",
-    "start_url": "/scandoo/",
     "display": "standalone",
     "orientation": "portrait"
   }
