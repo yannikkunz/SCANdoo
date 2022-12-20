@@ -122,6 +122,10 @@ html, body {
     color: #5ad0bf;
 }
 
+.text--red {
+  color: #b30000;
+}
+
 .link {
     color: #5ad0bf;
     text-decoration: none;

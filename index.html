@@ -88,20 +88,20 @@
                     <img class="img-fluid small-logo pt-3" id="doo-logo" src="assets/logo+doo+white2048-1920w.png" />
                     <h4 id="ticketHash" class="pt-3 text text--green text--primary"></h4>
                 </div>
-                    
-                
-
             </div>
         </div>
     </div>
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-center flex-wrap">
+        <h4 class="text--primary text-center p-4">
+            <span id="warning-text" class="text--red"></span>
+        </h4>
         <div class="container p-4 pt-md-5">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="check-in__booking-name">
                         <h4 class="text--primary">
                             <i class="fa fa-user text--green"></i>
-                            <span id="name">Yannik Kunz</span>
+                            <span id="name"></span>
                         </h4>
                     </div>
                     <div class="pl-2 ml-2 border-grey-left">
@@ -154,10 +154,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row pt-3 pt-md-5">
                 <div class="col-md-6 text-center px-3 py-1">
                     <button class="btn btn-primary btn-lg btn-block" id="checkinBtn"
-                        onclick="processTicketHash('checkin', localStorage.getItem('ticketHash'))" disabled>
+                        onclick="processTicketHash(localStorage.getItem('ticketHash'), 'ticket', true)" disabled>
                         EINCHECKEN
                     </button>
                     <div class="check-in-action__warning-text">
