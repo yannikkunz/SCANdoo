@@ -178,7 +178,7 @@ function processTicketResponse(obj) {
     document.getElementById("badge-url").href ="https://yannikkunz.github.io/SCANdoo/badges/" + obj.ticketHash + ".pdf";
 
     if (localStorage.getItem("autoBadgePrintActivated") === "true" && obj.printCount == 0) {
-      printBadge();
+      printBadge(obj.ticketHash);
     }
   }
 
@@ -187,9 +187,10 @@ function processTicketResponse(obj) {
   document.getElementById("loader-container").style.display = "none";
 }
 
-function printBadge() {
+function printBadge(ticketHash) {
   var url = document.getElementById("badge-url").getAttribute("href");
   printJS({ printable: url, type: "pdf" });
+  processTicketHash(ticketHash,'badge', false);
 }
 
 // Ticket Search
