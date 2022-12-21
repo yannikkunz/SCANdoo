@@ -86,25 +86,30 @@ if (localStorage.getItem("QrCodeActivated") === "true") {
 function processTicketHash(ticketHash, request, checkin) {
 
   console.log("ProcessTicketHash - Hash: " + ticketHash + " - Checkin: " + checkin);
-  console.time();
+  
 
-  document.getElementById("loader-container").style.display = "block";
-  document.getElementById("ticketHash").innerHTML = ticketHash;
-  if(!checkin) localStorage.setItem("ticketHash", ticketHash);
+  if (request === "ticket") {
+    console.time();
+
+    document.getElementById("loader-container").style.display = "block";
+    document.getElementById("ticketHash").innerHTML = ticketHash;
+    if (!checkin) localStorage.setItem("ticketHash", ticketHash);
+  }
 
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var obj = JSON.parse(this.responseText)
-      if(obj.request === "ticket") {
+      if (obj.request === "ticket") {
         processTicketResponse(obj);
       }
+
     } else if (this.readyState == 4 && this.status == 400) {
       showFailedTicketInfo();
     }
   };
 
-  xmlhttp.open("GET",localStorage.getItem("webhookURL") + "?hash=" + ticketHash + "&request=" + request + "&checkin=" + checkin, true);
+  xmlhttp.open("GET", localStorage.getItem("webhookURL") + "?hash=" + ticketHash + "&request=" + request + "&checkin=" + checkin, true);
   console.log("Send request: " + localStorage.getItem("webhookURL") + "?hash=" + ticketHash + "&request=" + request + "&checkin=" + checkin);
   xmlhttp.setRequestHeader("Content-type", "application/json");
   xmlhttp.send();
@@ -135,7 +140,7 @@ function processTicketResponse(obj) {
 
   document.getElementById("warning-text").innerHTML = "";
   document.getElementById("warning-text-container").classList.add("d-none");
-  
+
   // Display attendee info
   document.getElementById("name").innerHTML = obj.firstName + " " + obj.lastName;
   document.getElementById("event").innerHTML = obj.event;
@@ -150,7 +155,7 @@ function processTicketResponse(obj) {
   document.getElementById("check-in__info-text").classList.remove("text--red");
 
   //Check-in Button
-  if(!obj.checkinRequested && obj.checkinAvailable) {
+  if (!obj.checkinRequested && obj.checkinAvailable) {
     document.getElementById("checkinBtn").disabled = false;
     document.getElementById("check-in__info-text").innerHTML = "Entwertet das Ticket";
     document.getElementById("check-in__info-text").classList.remove("text--red");
@@ -161,7 +166,7 @@ function processTicketResponse(obj) {
   }
 
   // Checkin Background
-  if(obj.checkinRequested && obj.checkinAvailable) {
+  if (obj.checkinRequested && obj.checkinAvailable) {
     document.getElementById("check-in__header").classList.remove("background--red");
     document.getElementById("check-in__header").classList.add("background--green");
   } else if (obj.checkinRequested && !obj.checkinAvailable) {
@@ -175,7 +180,7 @@ function processTicketResponse(obj) {
   //Badge printing
   if (obj.printBadge) {
     document.getElementById("printBadge").disabled = false;
-    document.getElementById("badge-url").href ="https://yannikkunz.github.io/SCANdoo/badges/" + obj.ticketHash + ".pdf";
+    document.getElementById("badge-url").href = "https://yannikkunz.github.io/SCANdoo/badges/" + obj.ticketHash + ".pdf";
 
     if (localStorage.getItem("autoBadgePrintActivated") === "true" && obj.printCount == 0) {
       printBadge(obj.ticketHash);
@@ -190,7 +195,7 @@ function processTicketResponse(obj) {
 function printBadge(ticketHash) {
   var url = document.getElementById("badge-url").getAttribute("href");
   printJS({ printable: url, type: "pdf" });
-  processTicketHash(ticketHash,'badge', false);
+  processTicketHash(ticketHash, 'badge', false);
 }
 
 // Ticket Search
@@ -209,6 +214,6 @@ function searchTicket() {
   } else {
     processTicketHash(document.getElementById("searchTicketInput").value, "ticket", false);
   }
-  
+
   document.getElementById("searchTicketInput").value = "";
 }
