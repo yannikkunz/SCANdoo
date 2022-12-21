@@ -1,5 +1,7 @@
 var audio;
 var lastScan;
+var scanInput = '';
+var scanActive = false;
 
 function activateAudio() {
   audio = new Audio("assets/beep-104060.mp3");
@@ -23,6 +25,30 @@ function activateAudio() {
       e.preventDefault();
   }
 });*/
+
+document.addEventListener("keydown", function (e) {
+  const textInput = e.key || String.fromCharCode(e.keyCode);
+  const targetName = e.target.localName;
+  if (textInput === "!") {
+    scanActive = true;
+  } else if (textInput === "?") {
+    scanActive = false;
+    console.log("New Scan: " + scanInput)
+
+    var ticketHash = scanInput.slice(-8);
+
+    if (localStorage.getItem("autoCheckinActivated") === "true") {
+      processTicketHash(ticketHash, "ticket", true);
+    } else {
+      processTicketHash(ticketHash, "ticket", false);
+    }
+
+    scanInput = "";
+
+  } else if (scanActive && textInput && textInput.length === 1 && targetName !== 'input') {
+    scanInput = scanInput + textInput;
+  }
+});
 
 // QR Code Scanner
 function onScanSuccess(qrCodeMessage) {
