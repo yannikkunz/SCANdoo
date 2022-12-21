@@ -85,6 +85,7 @@ function processTicketHash(ticketHash, request, checkin) {
 }
 
 function showFailedTicketInfo() {
+  document.getElementById("warning-text-container").classList.remove("d-none");
   document.getElementById("warning-text").innerHTML = "Teilnehmer nicht gefunden";
 
   document.getElementById("event").innerHTML = "";
@@ -107,12 +108,13 @@ function showFailedTicketInfo() {
 function processTicketResponse(obj) {
 
   document.getElementById("warning-text").innerHTML = "";
+  document.getElementById("warning-text-container").classList.add("d-none");
   
   // Display attendee info
   document.getElementById("name").innerHTML = obj.firstName + " " + obj.lastName;
   document.getElementById("event").innerHTML = obj.event;
   document.getElementById("booking-id").innerHTML = obj.bookingNumber;
-  document.getElementById("entries").innerHTML = obj.entries.replace(/\s/g, "<br>");
+  document.getElementById("entries").innerHTML = obj.entries;
 
   document.getElementById("ticketCategory").innerHTML = obj.ticketCategory;
   document.getElementById("valid_from").innerHTML = obj.validFrom;
