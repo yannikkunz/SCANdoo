@@ -93,7 +93,7 @@ function processTicketHash(ticketHash, request, checkin) {
 
     document.getElementById("loader-container").style.display = "block";
     document.getElementById("ticketHash").innerHTML = ticketHash;
-    if (!checkin) localStorage.setItem("ticketHash", ticketHash);
+    localStorage.setItem("ticketHash", ticketHash);
   }
 
   var xmlhttp = new XMLHttpRequest();
