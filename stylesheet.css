@@ -348,3 +348,10 @@ button#html5-qrcode-button-camera-stop {
 img[alt="Info icon"] {
   display: none;
 }
+
+.scanner-container {
+  position: fixed;
+  z-index: 1023;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1));
+  display: flex;
+}

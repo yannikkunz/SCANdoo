@@ -180,7 +180,7 @@ function processTicketResponse(obj) {
   //Badge printing
   if (obj.printBadge) {
     document.getElementById("printBadge").disabled = false;
-    document.getElementById("badge-url").href = "https://yannikkunz.github.io/SCANdoo/badges/" + obj.ticketHash + ".pdf";
+    document.getElementById("badge-url").href = obj.badgeUrl;
 
     if (localStorage.getItem("autoBadgePrintActivated") === "true" && obj.printCount == 0) {
       printBadge(obj.ticketHash);
@@ -194,7 +194,7 @@ function processTicketResponse(obj) {
 
 function printBadge(ticketHash) {
   var url = document.getElementById("badge-url").getAttribute("href");
-  printJS({ printable: url, type: "pdf" });
+  printJS({ printable: url, type: "image" });
   processTicketHash(ticketHash, 'badge', false);
 }
 
