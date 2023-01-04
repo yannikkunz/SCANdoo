@@ -140,7 +140,7 @@ new Chart("checked-in-doughnut", {
     elements: {
       center: {
         text:
-          Math.round((yValues[1] / (yValues[0] + yValues[1])) * 100) +
+          Math.round((yValues[1] / (parseInt(yValues[0]) + parseInt(yValues[1]))) * 100) +
           "% eingecheckt",
         color: "#434652", // Default is #000000
         fontStyle: "Open Sans", // Default is Arial
