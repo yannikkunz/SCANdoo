@@ -52,8 +52,12 @@ document.addEventListener("keydown", function (e) {
 
 // QR Code Scanner
 function onScanSuccess(qrCodeMessage) {
-  audio.play();
-
+  try {
+    audio.play();
+  } catch {
+    console.log("Audio not activated");
+  };
+  
   var ticketHash = qrCodeMessage.slice(-8);
 
   // Get last 8 chars of the scanned input so we can scan ticket hashs & checkin links
