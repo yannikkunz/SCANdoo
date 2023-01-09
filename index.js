@@ -152,6 +152,7 @@ function processTicketResponse(obj) {
 
 
   var formattedEntries;
+  document.getElementById("entries").innerHTML = "";
   Object.keys(obj.entries).forEach(key => {
     var newNode = document.createElement('span');
     newNode.innerHTML = convertDate(obj.entries[key]) + "<br>";
