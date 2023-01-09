@@ -57,7 +57,7 @@ function onScanSuccess(qrCodeMessage) {
   } catch {
     console.log("Audio not activated");
   };
-  
+
   var ticketHash = qrCodeMessage.slice(-8);
 
   // Get last 8 chars of the scanned input so we can scan ticket hashs & checkin links
@@ -90,7 +90,7 @@ if (localStorage.getItem("QrCodeActivated") === "true") {
 function processTicketHash(ticketHash, request, checkin) {
 
   console.log("ProcessTicketHash - Hash: " + ticketHash + " - Checkin: " + checkin);
-  
+
 
   if (request === "ticket") {
     console.time();
@@ -149,11 +149,18 @@ function processTicketResponse(obj) {
   document.getElementById("name").innerHTML = obj.firstName + " " + obj.lastName;
   document.getElementById("event").innerHTML = obj.event;
   document.getElementById("booking-id").innerHTML = obj.bookingNumber;
-  document.getElementById("entries").innerHTML = obj.entries;
+
+
+  var formattedEntries;
+  Object.keys(obj.entries).forEach(key => {
+    var newNode = document.createElement('span');
+    newNode.innerHTML = convertDate(obj.entries[key]) + "<br>";
+    document.getElementById("entries").appendChild(newNode);
+  })
 
   document.getElementById("ticketCategory").innerHTML = obj.ticketCategory;
-  document.getElementById("valid_from").innerHTML = obj.validFrom;
-  document.getElementById("valid_till").innerHTML = obj.validTill;
+  document.getElementById("valid_from").innerHTML = convertDate(obj.validFrom);
+  document.getElementById("valid_till").innerHTML = convertDate(obj.validTill);
   document.getElementById("max_entries").innerHTML = obj.maxEntries;
 
   document.getElementById("check-in__info-text").classList.remove("text--red");
@@ -194,6 +201,11 @@ function processTicketResponse(obj) {
   // Terminate timer and loader
   console.timeEnd();
   document.getElementById("loader-container").style.display = "none";
+}
+
+function convertDate(date) {
+  var dt = new Date(date);
+  return dt.toLocaleString();
 }
 
 function printBadge(ticketHash) {
