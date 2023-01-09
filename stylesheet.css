@@ -355,3 +355,83 @@ img[alt="Info icon"] {
   background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1));
   display: flex;
 }
+
+.openBtn {
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1));
+}
+
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 80%;
+  text-align: center;
+  margin-top: 30px;
+  margin: auto;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  font-size: 50px;
+  cursor: pointer;
+  color: white;
+}
+
+.overlay input[type=text] {
+  padding: 15px;
+  font-size: 17px;
+  border: none;
+  float: left;
+  width: 80%;
+  background: white;
+}
+
+button.openBtn {
+  position: fixed;
+  top: 0;
+  background: none;
+  padding: 0;
+}
+
+button.openBtn {
+  font-size: 25px
+}
+
+.overlay-content button.openBtn {
+  background: #5ad0bf;
+  padding: 10px;
+  margin: 0;
+  position: relative
+}
+
+.overlay-heading {
+  color: #5ad0bf;
+  font-size: 20pt;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.overlay-text {
+  color: white;
+  margin-bottom: 40px;
+}
+
+.searchInput {
+  display: flex;
+  justify-content: center;
+}
